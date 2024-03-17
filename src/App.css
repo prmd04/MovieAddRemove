@@ -27,3 +27,16 @@ button:active {
   background-color: #460897;
   border-color: #460897;
 }
+.loading {
+  width: 90%;
+  max-width: 40rem;
+  height: 100px;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  background-color: white;
+  color: #460897;
+}
+
