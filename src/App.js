@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import MoviesList from './components/MoviesList';
 import './App.css';
@@ -9,7 +9,9 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  function fetchMovieHandler() {
+  
+
+  const fetchMovieHandler = () =>{
     setIsLoading(true);
     setError(null);
     fetch("https://swapi.dev/api/films/")
@@ -29,6 +31,7 @@ function App() {
         setIsLoading(false);
       });
   }
+  useEffect(fetchMovieHandler,[]);
 
   return (
     <React.Fragment>
