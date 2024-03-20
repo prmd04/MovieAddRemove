@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import MoviesList from './components/MoviesList';
 import './App.css';
+import AddMovie from './components/AddMovie';
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
     fetch("https://swapi.dev/api/films/")
       .then(response => response.json())
       .then(data => {
+        console.log(data);
         const transformMovies = data.results.map(movie => ({
           id: movie.episode_id,
           title: movie.title,
@@ -35,6 +37,7 @@ function App() {
 
   return (
     <React.Fragment>
+      <AddMovie/>
       <section>
         <button onClick={fetchMovieHandler}>Fetch Movies</button>
       </section>
