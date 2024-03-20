@@ -8,12 +8,15 @@ const MovieList = (props) => {
     <ul className={classes['movies-list']}>
       {props.movies.map((movie) => (
         <Movie
+          onDeleteHandler= {props.onDeleteHandler}
           key={movie.id}
+          id={movie.key}
           title={movie.title}
           releaseDate={movie.releaseDate}
           openingText={movie.openingText}
         />
       ))}
+      
     </ul>
   );
 };

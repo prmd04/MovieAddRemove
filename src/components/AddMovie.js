@@ -1,62 +1,49 @@
-import React, { useEffect, useRef, useState } from 'react'
-import './AddMovie.css'
+import React, { useRef } from 'react';
 
-const AddMovie = () => {
+import classes from './AddMovie.module.css';
 
-  const titleRef = useRef();
-  const openingRef = useRef();
-  const dateRef = useRef();
+function AddMovie(props) {
+  const titleRef = useRef('');
+  const openingTextRef = useRef('');
+  const releaseDateRef = useRef('');
 
-  const [diplayForm,setDisplayForm] = useState(false);
-  const[moviesData,setMoviesData] = useState(null);
+  function submitHandler(event) {
+    event.preventDefault();
 
+    // could add validation here...
 
-  useEffect(()=>{
-    const fetchData = async () =>{
-      const response = await fetch("https://swapi.dev/api/films/")
-      const data = await response.json();
-      setMoviesData(data.results);
-    }
-    fetchData();
-  },[])
+    const movie = {
+      
+      title: titleRef.current.value,
+      openingText: openingTextRef.current.value,
+      releaseDate: releaseDateRef.current.value,
+    };
 
-  console.log(moviesData);
-
-  const addMovieHandler = (e) =>{
-
-    e.preventDefault();
-    if(!diplayForm){
-      setDisplayForm(true);
-      return;
-    }
-    const newObj = {
-      title : titleRef.current.value,
-      opening_crawl:openingRef.current.value,
-      relese_date:dateRef.current.value
-    }
+    props.onAddMovie(movie);
     titleRef.current.value="";
-    openingRef.current.value="";
-    dateRef.current.value="";
+    openingTextRef.current.value='';
+    releaseDateRef.current.value="";
 
-    if(moviesData!=null){
-      setMoviesData([...moviesData,newObj]);
-    }
 
   }
-  console.log(moviesData);
+
   return (
-    <form className='form'>
-      { diplayForm && <div className='form-container'>
-        <label>title</label>
-        <input type='text' ref={titleRef}></input>
-        <label>Opening Text</label>
-        <textarea rows='4' ref={openingRef}></textarea>
-        <label>release Date</label>
-        <input type='text' ref={dateRef}></input>
-      </div>}
-      <button onClick={addMovieHandler}>Add Movies</button>
+    <form onSubmit={submitHandler}>
+      <div className={classes.control}>
+        <label htmlFor='title'>Title</label>
+        <input type='text' id='title' ref={titleRef} />
+      </div>
+      <div className={classes.control}>
+        <label htmlFor='opening-text'>Opening Text</label>
+        <textarea rows='5' id='opening-text' ref={openingTextRef}></textarea>
+      </div>
+      <div className={classes.control}>
+        <label htmlFor='date'>Release Date</label>
+        <input type='text' id='date' ref={releaseDateRef} />
+      </div>
+      <button>Add Movie</button>
     </form>
-  )
+  );
 }
 
-export default AddMovie
+export default AddMovie;
